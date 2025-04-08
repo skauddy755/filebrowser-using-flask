@@ -47,7 +47,35 @@ def make_dir():
     os.mkdir(dir_full_path)
     return jsonify(status = True, message = "Folder created successfully")
 
+@app.route("/rename", methods = ["POST"])
+def rename():
 
+    item_info = json.loads(request.form.get('item_info'))
+    item_full_path_old = os.path.join(BASE_DIRECTORY, *item_info["cwd_seg"], item_info["basename"])
+    item_full_path_new = os.path.join(BASE_DIRECTORY, *item_info["cwd_seg"], item_info["new_basename"])
+    
+    if os.path.exists(item_full_path_new):
+        return jsonify(status = False, message = "Entity with given name already exists")
+    
+    os.rename(item_full_path_old, item_full_path_new)
+    return jsonify(status = True, message = "Entity renamed successfully")
+
+@app.route("/delete", methods = ["POST"])
+def delete():
+
+    item_info = json.loads(request.form.get('item_info'))
+    item_full_path = os.path.join(BASE_DIRECTORY, *item_info["cwd_seg"], item_info["basename"])
+    
+    if not os.path.exists(item_full_path):
+        return jsonify(status = False, message = "Entity does not exist")
+
+    if os.path.isfile(item_full_path):
+        os.remove(item_full_path)
+        return jsonify(status = True, message = "File deleted successfully")
+
+    else:
+        shutil.rmtree(item_full_path)
+        return jsonify(status = True, message = "Folder recursively deleted successfully")
 
 if __name__ == '__main__':
     app.run(debug=True)
