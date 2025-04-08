@@ -15,7 +15,18 @@
         <button class="btn btn-outline-secondary my-2 mr-2" onclick="go_back()">Go Back</button>
         <button class="btn btn-outline-success my-2 mr-2" onclick="make_dir()">New Folder</button>
         <span id="cwd-label" class="my-2 p-2"></span>
-        <ul id="directory-list-view" class="list-group"></ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Select</th>
+                    <th scope="col">File / Folder Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="directory-list-view">
+
+            </tbody>
+        </table>
     </div>
 
     <script src="{{ url_for('static', filename='main2.js') }}"></script>
