@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Browser</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .folder { font-weight: bold; cursor: pointer; }
+    .file { cursor: pointer; }
+    .actions { float: right; }
+  </style>
+</head>
+<body class="p-4">
+  <div class="container">
+    <h2>Simple File Browser</h2>
+    <div class="form-group d-flex align-items-center gap-2">
+      <input type="file" id="upload-input" webkitdirectory directory multiple>
+      <button class="btn btn-primary btn-sm ml-2" onclick="uploadFile()">Upload</button>
+      <button class="btn btn-secondary btn-sm ml-2" onclick="$('#mkdirModal').modal('show')">New Folder</button>
+    </div>
+    <ul class="list-group" id="file-list"></ul>
+  </div>
+
+  <!-- Rename Modal -->
+  <div class="modal fade" id="renameModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content p-3">
+        <h5>Rename</h5>
+        <input type="text" class="form-control" id="rename-input" placeholder="New name">
+        <button class="btn btn-success mt-2" onclick="confirmRename()">Rename</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Move Modal -->
+  <div class="modal fade" id="moveModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content p-3">
+        <h5>Select Destination Folder</h5>
+        <ul class="list-group" id="move-folder-list"></ul>
+        <button class="btn btn-success mt-3" onclick="confirmMove()">Move Here</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Make Directory Modal -->
+  <div class="modal fade" id="mkdirModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content p-3">
+        <h5>Create Folder</h5>
+        <input type="text" class="form-control" id="mkdir-input" placeholder="Folder name">
+        <button class="btn btn-success mt-2" onclick="createFolder()">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}">
+    
+  </script>
+</body>
+</html>
