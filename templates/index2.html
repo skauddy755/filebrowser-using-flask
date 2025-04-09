@@ -14,6 +14,8 @@
         <h1 class="display-4 w-100 p-2 my-2 rounded bg-light text-center">File Browser</h1>
         <button class="btn btn-outline-secondary my-2 mr-2" onclick="go_back()">Go Back</button>
         <button class="btn btn-outline-success my-2 mr-2" onclick="make_dir()">New Folder</button>
+        <input type="file" id="folderInput" class="form-control-file my-2 mr-2" webkitdirectory directory multiple />
+        <button class="btn btn-outline-info my-2 mr-2" onclick="uploadFolder()">Upload Folder</button>
         <span id="cwd-label" class="my-2 p-2"></span>
         <table class="table table-hover">
             <thead>

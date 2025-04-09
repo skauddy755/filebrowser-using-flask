@@ -77,5 +77,20 @@ def delete():
         shutil.rmtree(item_full_path)
         return jsonify(status = True, message = "Folder recursively deleted successfully")
 
+@app.route("/upload_folder", methods = ["POST"])
+def upload():
+    if 'files[]' not in request.files:
+        return "No files found", 400
+
+    files = request.files.getlist('files[]')
+
+    for file in files:
+        relative_path = file.filename  # e.g. "my_folder/subfolder/file.txt"
+        save_path = os.path.join(BASE_DIRECTORY, relative_path)
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        file.save(save_path)
+
+    return "Folder uploaded successfully"
+
 if __name__ == '__main__':
     app.run(debug=True)

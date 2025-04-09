@@ -165,4 +165,24 @@ function make_dir() {
         });
 }
 
+function uploadFolder() {
+    console.log("Came to upload...");
+
+    const input = document.getElementById("folderInput");
+    const files = input.files;
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("files[]", files[i], files[i].webkitRelativePath);
+    }
+
+    fetch("/upload_folder", {
+        method: "POST",
+        body: formData,
+    })
+    .then(res => res.text())
+    .then(data => alert("Upload complete"))
+    .catch(err => console.error(err));
+}
+
 load_current_working_directory();
