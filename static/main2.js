@@ -185,4 +185,22 @@ function uploadFolder() {
     .catch(err => console.error(err));
 }
 
+function uploadFiles() {
+    const input = document.getElementById('fileInput');
+    const files = input.files;
+  
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files[]", files[i]);  // Note the `[]` to indicate multiple
+    }
+  
+    fetch("/upload_files", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(err => console.error("Upload failed:", err));
+  }
+
 load_current_working_directory();

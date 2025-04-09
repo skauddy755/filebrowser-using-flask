@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
 import os
 import shutil
 import json
@@ -78,7 +79,7 @@ def delete():
         return jsonify(status = True, message = "Folder recursively deleted successfully")
 
 @app.route("/upload_folder", methods = ["POST"])
-def upload():
+def upload_folder():
     if 'files[]' not in request.files:
         return "No files found", 400
 
@@ -91,6 +92,21 @@ def upload():
         file.save(save_path)
 
     return "Folder uploaded successfully"
+
+@app.route("/upload_files", methods = ["POST"])
+def upload_files():
+    if 'files[]' not in request.files:
+        return "No files part", 400
+
+    files = request.files.getlist("files[]")  # Matches name in JS
+
+    for file in files:
+        if file and file.filename != '':
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(BASE_DIRECTORY, filename))
+
+    return "Files uploaded successfully"
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
